@@ -35,25 +35,6 @@ app.use('/api/orders', require('./routes/order'));
 app.use('/api/chatbot', require('./routes/chatbot'));
 
 
-// Nodemailer
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: { user: process.env.EMAIL_USER, pass: process.env.EMAIL_PASS },
-});
-
-app.post('/api/send-email', async (req, res) => {
-  const { to, subject, text } = req.body;
-  if (!to || !subject || !text) return res.status(400).json({ success: false, message: 'All fields required' });
-
-  try {
-    await transporter.sendMail({ from: process.env.EMAIL_USER, to, subject, text });
-    res.json({ success: true, message: 'Email sent successfully' });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ success: false, message: 'Email failed', error: err.message });
-  }
-});
-
 // Health check
 app.get('/api/health', (req, res) => res.json({ status: 'OK', uptime: process.uptime() }));
 

@@ -1,0 +1,105 @@
+[
+  { "intent": "greeting", "patterns": ["hi", "hello", "hey"], "responses": ["Hi there! 👋 How can I help you today?", "Hello! Welcome to ShopVerse. How can I assist you?"] },
+  { "intent": "goodbye", "patterns": ["bye", "goodbye", "see you"], "responses": ["Goodbye! Come back soon 😊", "See you again on ShopVerse!"] },
+  { "intent": "thanks", "patterns": ["thanks", "thank you", "appreciate it"], "responses": ["You’re welcome! Happy to help 😊", "Anytime! Glad I could assist."] },
+  { "intent": "how_are_you", "patterns": ["how are you", "how are you doing"], "responses": ["I’m doing great! Excited to help you shop 🛍️", "I’m always ready to assist you!"] },
+  { "intent": "delivery", "patterns": ["when will my order arrive", "delivery time", "shipping time","delivery"], "responses": ["Delivery usually takes 3–5 business days.", "You can expect your order within 3–5 business days."] },
+  { "intent": "order_status", "patterns": ["where is my order", "track order status", "order tracking","order"], "responses": ["You can track your order in the 'My Orders' section.", "Please provide your order ID to check the status."] },
+  { "intent": "price", "patterns": ["how much is", "price of", "cost of","price","amount"], "responses": ["Please provide the product name or ID for pricing details.", "You can find prices on the product page."] },
+  { "intent": "return", "patterns": ["how to return", "return policy", "initiate return","return"], "responses": ["You can return items within 7 days of delivery through the Orders page.", "To initiate a return, go to 'My Orders' and select the item."] },
+  { "intent": "payment", "patterns": ["payment methods", "how to pay", "payment options","payment"], "responses": ["We accept UPI, credit/debit cards, PayPal, and Cash on Delivery.", "You can choose your preferred payment method at checkout."] },
+
+  
+  { "intent": "track_order", "patterns": ["track my order", "order status", "where is my order"], "responses": ["Please share your order ID to track your shipment."] },
+  { "intent": "cancel_order", "patterns": ["cancel order", "stop my order", "order cancel"], "responses": ["I can help with that! Please provide your order ID."] },
+  { "intent": "refund_status", "patterns": ["refund", "money back", "return refund"], "responses": ["Refunds are processed within 5–7 business days."] },
+  { "intent": "return_policy", "patterns": ["return policy", "how to return", "product return"], "responses": ["You can return items within 7 days of delivery through the Orders page."] },
+  { "intent": "exchange_policy", "patterns": ["exchange product", "swap item", "replace item"], "responses": ["We offer exchanges within 7 days for eligible products."] },
+  { "intent": "replacement_request", "patterns": ["replace", "damaged product", "broken item"], "responses": ["Sorry about that! Please upload a photo of the damaged item to process replacement."] },
+
+  { "intent": "offers", "patterns": ["any offers", "discount", "coupon","offers", "sale"], "responses": ["Yes! Get 20% off electronics and 15% off fashion today! 🎉"] },
+  { "intent": "apply_coupon", "patterns": ["apply coupon", "use promo", "discount code"], "responses": ["You can apply coupons during checkout in the payment section."] },
+  { "intent": "invalid_coupon", "patterns": ["coupon not working", "code failed"], "responses": ["Make sure your coupon isn’t expired and applies to your products."] },
+  { "intent": "offer_expiry", "patterns": ["offer expiry", "deal till when"], "responses": ["Most deals last till midnight today!"] },
+
+  { "intent": "shipping_info", "patterns": ["shipping", "delivery time", "how long"], "responses": ["Delivery usually takes 3–5 business days."] },
+  { "intent": "shipping_charge", "patterns": ["shipping cost", "delivery charge", "free shipping"], "responses": ["Free shipping on orders above ₹499!"] },
+  { "intent": "international_shipping", "patterns": ["ship internationally", "outside india"], "responses": ["Currently, we deliver only within India."] },
+  { "intent": "delivery_address_change", "patterns": ["change address", "update delivery address"], "responses": ["You can update your delivery address before dispatch under ‘My Orders’."] },
+  { "intent": "delivery_delay", "patterns": ["late delivery", "delayed"], "responses": ["Apologies! Some delays can occur due to high demand or weather issues."] },
+
+  { "intent": "product_availability", "patterns": ["in stock", "available", "out of stock"], "responses": ["Please share the product name or ID, and I’ll check for you."] },
+  { "intent": "product_details", "patterns": ["product details", "specifications", "features"], "responses": ["Please share the product name or ID for detailed specs."] },
+  { "intent": "compare_products", "patterns": ["compare", "difference between"], "responses": ["Please tell me which two products you’d like to compare."] },
+  { "intent": "product_review", "patterns": ["reviews", "ratings", "feedback"], "responses": ["You can find reviews on the product details page."] },
+  { "intent": "price_check", "patterns": ["price of", "how much", "cost"], "responses": ["Please share the product name or ID to get the price."] },
+  { "intent": "low_stock_alert", "patterns": ["notify when available", "out of stock alert"], "responses": ["You can enable back-in-stock alerts on the product page."] },
+
+  { "intent": "payment_methods", "patterns": ["payment options", "credit card", "cash on delivery"], "responses": ["We support UPI, credit/debit cards, PayPal, and Cash on Delivery."] },
+  { "intent": "payment_failed", "patterns": ["payment failed", "transaction error"], "responses": ["Please retry or use a different payment method."] },
+  { "intent": "cod_eligibility", "patterns": ["cod available", "cash delivery"], "responses": ["COD is available on selected products below ₹10,000."] },
+  { "intent": "emi_option", "patterns": ["emi", "installment", "monthly payment"], "responses": ["Yes! EMI options are available on major credit cards."] },
+  { "intent": "payment_refund", "patterns": ["refund money", "payment refund"], "responses": ["Refunds are credited to your original payment method."] },
+
+  { "intent": "account_create", "patterns": ["create account", "sign up", "register"], "responses": ["You can register using your email or Google account on the login page."] },
+  { "intent": "account_login", "patterns": ["login", "sign in"], "responses": ["Go to Login and enter your registered email/password."] },
+  { "intent": "forgot_password", "patterns": ["forgot password", "reset password"], "responses": ["Click on ‘Forgot Password’ on the login page to reset it."] },
+  { "intent": "account_delete", "patterns": ["delete account", "remove my account"], "responses": ["We’re sorry to see you go! Please confirm through your account settings."] },
+  { "intent": "update_profile", "patterns": ["update profile", "change email", "edit info"], "responses": ["You can edit your profile details from the My Account section."] },
+
+  { "intent": "wishlist_add", "patterns": ["add to wishlist", "save item"], "responses": ["Added to wishlist! You can view it anytime under your profile."] },
+  { "intent": "wishlist_view", "patterns": ["view wishlist", "my favorites"], "responses": ["Here’s your wishlist ❤️"] },
+  { "intent": "wishlist_remove", "patterns": ["remove from wishlist"], "responses": ["Removed from wishlist successfully."] },
+
+  { "intent": "cart_add", "patterns": ["add to cart", "buy this"], "responses": ["Added to cart 🛒 Ready to checkout?"] },
+  { "intent": "cart_view", "patterns": ["view cart", "show my cart"], "responses": ["Here’s what’s in your cart."] },
+  { "intent": "cart_remove", "patterns": ["remove item from cart"], "responses": ["Item removed from your cart."] },
+  { "intent": "cart_checkout", "patterns": ["checkout", "proceed to buy"], "responses": ["Redirecting to checkout page... 💳"] },
+  { "intent": "cart_empty", "patterns": ["empty cart"], "responses": ["Your cart is now empty."] },
+
+  { "intent": "support_contact", "patterns": ["contact support", "customer care"], "responses": ["You can reach our support team via support@shopverse.com"] },
+  { "intent": "store_location", "patterns": ["store location", "physical store"], "responses": ["We’re currently online-only but expanding soon!"] },
+  { "intent": "complaint", "patterns": ["complaint", "issue", "problem"], "responses": ["Sorry for the inconvenience! Please share your order ID so we can help."] },
+  { "intent": "feedback", "patterns": ["feedback", "suggestion"], "responses": ["We appreciate feedback! You can submit it through the feedback form."] },
+
+  { "intent": "order_history", "patterns": ["order history", "my orders"], "responses": ["You can view your past orders in the ‘My Orders’ section."] },
+  { "intent": "order_invoice", "patterns": ["invoice", "bill"], "responses": ["Invoices can be downloaded from the order details page."] },
+  { "intent": "order_edit", "patterns": ["change order", "modify order"], "responses": ["You can modify your order only before it is shipped."] },
+
+  { "intent": "loyalty_points", "patterns": ["reward points", "loyalty points"], "responses": ["Earn 1 point for every ₹100 spent!"] },
+  { "intent": "gift_card", "patterns": ["gift card", "voucher"], "responses": ["You can purchase digital gift cards starting from ₹500."] },
+  { "intent": "refer_friend", "patterns": ["refer", "invite friend"], "responses": ["Invite a friend and get ₹100 wallet credit on their first purchase!"] },
+  { "intent": "subscription", "patterns": ["subscribe", "membership"], "responses": ["Join our membership for free shipping and exclusive offers."] },
+
+  { "intent": "app_download", "patterns": ["download app", "mobile app"], "responses": ["Download our app from Play Store or App Store 📱"] },
+  { "intent": "website_issue", "patterns": ["site not loading", "website error"], "responses": ["Try clearing your cache or accessing again later."] },
+  { "intent": "bug_report", "patterns": ["report bug", "error found"], "responses": ["Thank you! We’ll fix it as soon as possible."] },
+
+  { "intent": "category_fashion", "patterns": ["fashion", "clothing", "dress"], "responses": ["Our fashion section is full of new arrivals 👗"] },
+  { "intent": "category_electronics", "patterns": ["electronics", "gadgets"], "responses": ["Explore top electronics at unbeatable prices ⚡"] },
+  { "intent": "category_home", "patterns": ["home decor", "furniture"], "responses": ["Check out our home essentials and decor collection 🛋️"] },
+  { "intent": "category_beauty", "patterns": ["beauty", "cosmetics"], "responses": ["Shop the latest beauty products 💄"] },
+  { "intent": "category_groceries", "patterns": ["groceries", "food items"], "responses": ["Fresh groceries delivered to your doorstep 🥦"] },
+
+  { "intent": "seasonal_sale", "patterns": ["diwali sale", "black friday", "summer sale"], "responses": ["Seasonal sale is live! Don’t miss the special deals 🎉"] },
+  { "intent": "order_confirmation", "patterns": ["order confirmed", "did my order go through"], "responses": ["Check your email or My Orders section for confirmation."] },
+  { "intent": "order_not_received", "patterns": ["did not receive", "missing order"], "responses": ["Sorry to hear that! Please share your order ID."] },
+  { "intent": "wrong_item", "patterns": ["wrong item", "different product"], "responses": ["Please share a photo of the received product for quick resolution."] },
+  { "intent": "size_chart", "patterns": ["size chart", "measurements"], "responses": ["You can find the size chart on the product page."] },
+
+  { "intent": "product_recommendation", "patterns": ["suggest me", "recommend", "what to buy"], "responses": ["Sure! What type of product are you looking for?"] },
+  { "intent": "recently_viewed", "patterns": ["recently viewed", "last seen"], "responses": ["Here are your recently viewed products."] },
+  { "intent": "popular_products", "patterns": ["trending", "popular products"], "responses": ["These are our top trending items today 🔥"] },
+  { "intent": "new_arrivals", "patterns": ["new arrivals", "latest"], "responses": ["Here are the latest arrivals in store!"] },
+
+  { "intent": "stock_notification", "patterns": ["notify me", "alert when in stock"], "responses": ["We’ll notify you as soon as it’s available!"] },
+  { "intent": "wishlist_share", "patterns": ["share wishlist"], "responses": ["You can share your wishlist using the Share option."] },
+  { "intent": "language_change", "patterns": ["change language", "different language"], "responses": ["Currently we support English, Hindi, and Tamil."] },
+  { "intent": "currency_change", "patterns": ["change currency", "price in usd"], "responses": ["Prices are currently shown in INR. USD support coming soon."] },
+  { "intent": "order_limit", "patterns": ["max order", "quantity limit"], "responses": ["You can order up to 10 units per product."] },
+  { "intent": "support_hours", "patterns": ["support hours", "when available"], "responses": ["Support is available 9 AM – 9 PM, all days."] },
+  { "intent": "return_initiate", "patterns": ["start return", "initiate return"], "responses": ["Visit your Orders page and click on ‘Return’ next to your item."] },
+  { "intent": "order_summary", "patterns": ["order summary", "order total"], "responses": ["You can view the order summary in your cart before checkout."] },
+  { "intent": "store_hours", "patterns": ["store hours", "opening time"], "responses": ["Our online store is open 24/7 🌐"] },
+  { "intent": "unrecognized", "patterns": ["random text"], "responses": ["Sorry, I didn’t get that. Can you please rephrase?"] }
+]
