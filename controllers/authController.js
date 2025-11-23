@@ -49,6 +49,13 @@ exports.login = async (req, res) => {
     );
 
 
+    // ✅ Always send profileImage with full URL
+    const profileImage = user.profileImage
+      ? user.profileImage.startsWith("http")
+        ? user.profileImage
+        : `${req.protocol}://${req.get("host")}/uploads/${user.profileImage}`
+      : null;
+
     res.json({ success: true, user: { id: user._id, name: user.name, email: user.email, role: user.role }, token });
   } catch (err) {
     console.error(err);

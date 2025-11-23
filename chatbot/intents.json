@@ -23,7 +23,7 @@
     {
       "tag": "categories",
       "patterns": ["categories", "what categories are available", "shop by category"],
-      "responses": ["We have categories like Electronics, Fashion, Home Decor, Sports, and more!"]
+      "responses": ["We have categories like Electronics, Fashion, Home Decor, and more!"]
     },
     {
       "tag": "electronics",

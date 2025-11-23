@@ -1,49 +1,57 @@
-const express = require('express');
+
+const express = require("express");
 const router = express.Router();
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
-const { protect } = require('../middleware/authMiddleware');
-const Payment = require('../models/Payment');
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+const { protect } = require("../middleware/authMiddleware");
+const Payment = require("../models/Payment");
 
-
-// @route   POST /api/payment
-// @desc    Create a payment intent
-// @access  Private
-router.post('/', protect, async (req, res) => {
+// ✅ Create a Payment Intent (Stripe)
+router.post("/", protect, async (req, res) => {
   try {
-    const { amount } = req.body;
+    const { amount, currency = "inr", description = "ShopVerse Purchase" } = req.body;
+
     if (!amount) {
-      return res.status(400).json({ success: false, message: 'Amount is required' });
+      return res.status(400).json({ success: false, message: "Amount is required" });
     }
 
-    // Create a PaymentIntent
+    // ✅ Create a Stripe PaymentIntent
     const paymentIntent = await stripe.paymentIntents.create({
-      amount: amount * 100, // convert to paise
-      currency: 'inr',
-      payment_method_types: ['card'],
-      description: 'ShopVerse Purchase',
+      amount: Math.round(amount * 100), // amount in smallest currency unit
+      currency,
+      description,
+      metadata: { userId: req.user._id.toString() },
+      automatic_payment_methods: { enabled: true },
     });
 
-    // Save to DB
+    // ✅ Save payment to MongoDB
     await Payment.create({
       user: req.user._id,
       amount,
-      currency: 'inr',
+      currency,
       paymentIntentId: paymentIntent.id,
       status: paymentIntent.status,
-      description: 'ShopVerse Purchase',
+      description,
     });
 
-    res.json({
+    res.status(200).json({
       success: true,
       clientSecret: paymentIntent.client_secret,
+      paymentId: paymentIntent.id,
     });
   } catch (error) {
-    console.error('Stripe Error:', error);
+    console.error("❌ Stripe Payment Error:", error);
     res.status(error.statusCode || 500).json({
       success: false,
-      message: error.message,
+      message: error.message || "Something went wrong with payment",
     });
   }
 });
 
 module.exports = router;
+
+
+
+
+
+
+

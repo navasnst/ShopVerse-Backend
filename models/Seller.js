@@ -8,9 +8,12 @@ const sellerSchema = new mongoose.Schema({
   shopName: { type: String, required: true, trim: true },
   phone: { type: String },
   address: { type: String },
+   profileImage: { type: String }, 
   isVerified: { type: Boolean, default: false },
   products: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Product' }],
   role: { type: String, default: 'seller' },
+  status: { type: String, enum: ['active', 'inactive'], default: 'active' },
+
 }, { timestamps: true });
 
 // Hash password
