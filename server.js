@@ -28,7 +28,7 @@ app.use(
 
 // ✅ Allow CORS headers globally (for static + API)
 app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", process.env.CLIENT_URL || "http://localhost:5173");
+  res.header("Access-Control-Allow-Origin", process.env.CLIENT_URL || "https://shopverse-frontend-5.onrender.com");
   res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS");
   res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
   next();
