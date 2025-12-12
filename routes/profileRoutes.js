@@ -34,8 +34,10 @@ router.post("/upload", upload.single("profileImage"), (req, res) => {
     return res.status(400).json({ success: false, message: "No file uploaded" });
   }
 
-  const imageUrl = `${req.protocol}://${req.get("host")}/uploads/profileImages/${req.file.filename}`;
-  res.json({ success: true, imageUrl });
+  // const imageUrl = `${req.protocol}://${req.get("host")}/uploads/profileImages/${req.file.filename}`;
+  // res.json({ success: true, imageUrl });
+  const imageUrl = `${process.env.BACKEND_URL}/uploads/profileImages/${req.file.filename}`;
+
 });
 
 module.exports = router;
