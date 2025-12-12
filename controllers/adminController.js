@@ -70,13 +70,15 @@ exports.loginAdmin = async (req, res) => {
 
     // ✅ Safe handling of profile image
     let profileImage = null;
+    const baseURL = process.env.BACKEND_URL || "http://localhost:5000";
     if (admin.profileImage) {
       if (typeof admin.profileImage === "string") {
         // Normal string path
-        profileImage = `http://localhost:5000${admin.profileImage.replace(/\\/g, "/")}`;
+        // profileImage = `http://localhost:5000${admin.profileImage.replace(/\\/g, "/")}`;
+        profileImage = `${baseURL}${admin.profileImage.replace(/\\/g, "/")}`;
       } else if (typeof admin.profileImage === "object" && admin.profileImage.path) {
         // If image stored as an object { path: "...", filename: "..." }
-        profileImage = `http://localhost:5000${admin.profileImage.path.replace(/\\/g, "/")}`;
+        profileImage = `${baseURL}${admin.profileImage.path.replace(/\\/g, "/")}`;
       }
     }
 
@@ -108,8 +110,9 @@ exports.getAdminProfile = async (req, res) => {
 
     // ✅ Fix: ensure profileImage is a full URL
     let profileImage = null;
+    const baseURL = process.env.BACKEND_URL || "http://localhost:5000";
     if (admin.profileImage && typeof admin.profileImage === "string") {
-      profileImage = `http://localhost:5000${admin.profileImage.replace(/\\/g, "/")}`;
+      profileImage = `${baseURL}${admin.profileImage.replace(/\\/g, "/")}`;
     }
 
     res.json({
@@ -151,7 +154,8 @@ exports.updateAdminProfile = async (req, res) => {
     await admin.save();
 
     const profileImage = admin.profileImage
-      ? `http://localhost:5000${admin.profileImage.replace(/\\/g, "/")}`
+      const baseURL = process.env.BACKEND_URL || "http://localhost:5000";
+      ? `${baseURL}${admin.profileImage.replace(/\\/g, "/")}`
       : null;
 
     res.json({
@@ -181,8 +185,8 @@ exports.uploadProfileImage = async (req, res) => {
 
     admin.profileImage = `/uploads/profileImages/${req.file.filename}`;
     await admin.save();
-
-    const imageUrl = `http://localhost:5000${admin.profileImage.replace(/\\/g, "/")}`;
+    const baseURL = process.env.BACKEND_URL || "http://localhost:5000";
+    const imageUrl = `${baseURL}${admin.profileImage.replace(/\\/g, "/")}`;
 
     res.json({
       success: true,
