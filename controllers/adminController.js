@@ -89,9 +89,8 @@ exports.loginAdmin = async (req, res) => {
         role: admin.role || "admin",
         profileImage,
       },
-      // token: generateToken(admin),
-      token: generateToken({ id: admin._id, role: "admin" })
-
+      token: generateToken(admin),
+    
     });
   } catch (err) {
     console.error("Admin login error:", err);
