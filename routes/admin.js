@@ -52,6 +52,8 @@ router.post('/orders/:id/refund', adminController.refundOrder);
 // ✅ User management
 router.get('/users', adminController.listUsers);
 router.get('/users/:id', adminController.getUser);
+router.put('/users/:id', adminController.updateUser);
+router.put('/users/:id/status', adminController.changeUserStatus);
 router.put('/users/:id/suspend', adminController.suspendUser);
 router.delete('/users/:id', adminController.deleteUser);
 

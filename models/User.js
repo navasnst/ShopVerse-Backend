@@ -18,6 +18,9 @@ const userSchema = new mongoose.Schema({
 
   shopName: { type: String },
   shopDescription: { type: String },
+
+  status: { type: String, enum: ['active', 'inactive', 'blocked'], default: 'active' },
+  suspended: { type: Boolean, default: false },
 });
 
 // ✅ Hash password before saving

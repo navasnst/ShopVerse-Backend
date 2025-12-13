@@ -445,6 +445,11 @@ exports.listUsers = async (req, res) => {
           profileImage: 1,
           createdAt: 1,
           totalOrders: 1,
+           role: 1,
+          status: 1,
+          shippingAddress: 1,
+          shopName: 1,
+          shopDescription: 1,
         },
       },
 
@@ -466,13 +471,69 @@ exports.getUser = async (req, res) => {
   catch (err) { console.error(err); res.status(500).json({ success: false }); }
 };
 
-exports.suspendUser = async (req, res) => {
+// exports.suspendUser = async (req, res) => {
+//   try {
+//     const user = await User.findById(req.params.id);
+//     user.suspended = true;
+//     await user.save();
+//     res.json({ success: true });
+//   } catch (err) { console.error(err); res.status(500).json({ success: false }); }
+// };
+
+
+exports.updateUser = async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
-    user.suspended = true;
+    if (!user) return res.status(404).json({ success: false, message: 'User not found' });
+
+    // Only allow updating certain fields from admin panel
+    const allowed = ['name', 'email', 'phone', 'role', 'status', 'suspended', 'shippingAddress', 'shopName', 'shopDescription'];
+    allowed.forEach(field => {
+      if (req.body[field] !== undefined) user[field] = req.body[field];
+    });
+
     await user.save();
-    res.json({ success: true });
-  } catch (err) { console.error(err); res.status(500).json({ success: false }); }
+    res.json({ success: true, user });
+  } catch (err) {
+    console.error('updateUser error:', err);
+    res.status(500).json({ success: false, message: 'Server error' });
+  }
+};
+
+exports.changeUserStatus = async (req, res) => {
+  try {
+    const { status } = req.body;
+    if (!['active', 'inactive', 'blocked'].includes(status)) {
+      return res.status(400).json({ success: false, message: 'Invalid status' });
+    }
+    const user = await User.findById(req.params.id);
+    if (!user) return res.status(404).json({ success: false, message: 'User not found' });
+
+    user.status = status;
+    await user.save();
+
+
+    res.json({ success: true, user });
+  } catch (err) {
+    console.error('changeUserStatus error:', err);
+    res.status(500).json({ success: false, message: 'Server error' });
+  }
+};
+
+exports.suspendUser = async (req, res) => {
+  try {
+    const { suspended } = req.body; // expect boolean
+    const user = await User.findById(req.params.id);
+    if (!user) return res.status(404).json({ success: false, message: 'User not found' });
+
+    user.suspended = !!suspended;
+    await user.save();
+
+    res.json({ success: true, user });
+  } catch (err) {
+    console.error('suspendUser error:', err);
+    res.status(500).json({ success: false, message: 'Server error' });
+  }
 };
 
 exports.deleteUser = async (req, res) => {

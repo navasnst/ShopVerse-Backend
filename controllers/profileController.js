@@ -40,7 +40,7 @@ exports.updateAdminProfile = async (req, res) => {
       updateData.password = await bcrypt.hash(password, salt);
     }
 
-    const updatedAdmin = await Admin.findByIdAndUpdate(req.user.id, updateData, {
+    const updatedAdmin = await Admin.findByIdAndUpdate(req.user._id, updateData, {
       new: true,
     }).select("-password");
 

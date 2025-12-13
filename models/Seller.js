@@ -12,7 +12,7 @@ const sellerSchema = new mongoose.Schema({
   isVerified: { type: Boolean, default: false },
   products: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Product' }],
   role: { type: String, default: 'seller' },
-  status: { type: String, enum: ['active', 'inactive'], default: 'active' },
+  status: { type: String, enum: ['active', 'inactive', 'banned'], default: 'active' },
 
 }, { timestamps: true });
 
