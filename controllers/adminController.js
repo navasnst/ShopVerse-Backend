@@ -158,6 +158,7 @@ exports.updateAdminProfile = async (req, res) => {
     //   ? `${baseURL}${admin.profileImage.replace(/\\/g, "/")}`
     //   : null;
     profileImage: admin.profileImage
+      const baseURL = process.env.BACKEND_URL || "http://localhost:5000";
       ? `${baseURL}${admin.profileImage.replace(/\\/g, "/")}`
       : null,
 
