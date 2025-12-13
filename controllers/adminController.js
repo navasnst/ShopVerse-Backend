@@ -137,42 +137,46 @@ exports.getAdminProfile = async (req, res) => {
 exports.updateAdminProfile = async (req, res) => {
   try {
     const admin = await Admin.findById(req.user._id);
+
     if (!admin) {
-      return res.status(404).json({ success: false, message: "Admin not found" });
+      return res.status(404).json({
+        success: false,
+        message: "Admin not found",
+      });
     }
 
     const { name, email, phone, bio } = req.body;
+
     if (name) admin.name = name;
     if (email) admin.email = email;
     if (phone) admin.phone = phone;
     if (bio) admin.bio = bio;
 
+    // ✅ Update image only if uploaded
     if (req.file) {
       admin.profileImage = `/uploads/profileImages/${req.file.filename}`;
     }
 
     await admin.save();
 
-    // const profileImage = admin.profileImage
-    //   const baseURL = process.env.BACKEND_URL || "http://localhost:5000";
-    //   ? `${baseURL}${admin.profileImage.replace(/\\/g, "/")}`
-    //   : null;
-    profileImage: admin.profileImage
-      const baseURL = process.env.BACKEND_URL || "http://localhost:5000";
-      ? `${baseURL}${admin.profileImage.replace(/\\/g, "/")}`
-      : null,
-
-
-      res.json({
-        success: true,
-        admin: {
-          ...admin.toObject(),
-          profileImage,
-        },
-      });
+    res.json({
+      success: true,
+      admin: {
+        _id: admin._id,
+        name: admin.name,
+        email: admin.email,
+        phone: admin.phone,
+        bio: admin.bio,
+        role: admin.role,
+        profileImage: admin.profileImage, // ✅ relative path only
+      },
+    });
   } catch (err) {
-    console.error("Update admin profile error:", err);
-    res.status(500).json({ success: false, message: "Server error" });
+    console.error("❌ Update admin profile error:", err);
+    res.status(500).json({
+      success: false,
+      message: "Server error",
+    });
   }
 };
 
