@@ -92,7 +92,7 @@ exports.loginAdmin = async (req, res) => {
         profileImage,
       },
       token: generateToken(admin),
-    
+
     });
   } catch (err) {
     console.error("Admin login error:", err);
@@ -153,18 +153,22 @@ exports.updateAdminProfile = async (req, res) => {
 
     await admin.save();
 
-    const profileImage = admin.profileImage
-      const baseURL = process.env.BACKEND_URL || "http://localhost:5000";
+    // const profileImage = admin.profileImage
+    //   const baseURL = process.env.BACKEND_URL || "http://localhost:5000";
+    //   ? `${baseURL}${admin.profileImage.replace(/\\/g, "/")}`
+    //   : null;
+    profileImage: admin.profileImage
       ? `${baseURL}${admin.profileImage.replace(/\\/g, "/")}`
-      : null;
+      : null,
 
-    res.json({
-      success: true,
-      admin: {
-        ...admin.toObject(),
-        profileImage,
-      },
-    });
+
+      res.json({
+        success: true,
+        admin: {
+          ...admin.toObject(),
+          profileImage,
+        },
+      });
   } catch (err) {
     console.error("Update admin profile error:", err);
     res.status(500).json({ success: false, message: "Server error" });
@@ -450,7 +454,7 @@ exports.listUsers = async (req, res) => {
           profileImage: 1,
           createdAt: 1,
           totalOrders: 1,
-           role: 1,
+          role: 1,
           status: 1,
           shippingAddress: 1,
           shopName: 1,
