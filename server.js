@@ -19,12 +19,21 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 const app = express();
 
 // ✅ CORS must come before Helmet and routes
-app.use(
-  cors({
-    origin: process.env.CLIENT_URL || "http://localhost:5173",
-    credentials: true,
-  })
-);
+// app.use(
+//   cors({
+//     origin: process.env.CLIENT_URL || "http://localhost:5173",
+//     credentials: true,
+//   })
+// );
+const allowedOrigins = [
+  "https://shopverse-frontend-lcwg.onrender.com",
+  "http://localhost:5173"
+];
+
+app.use(cors({
+  origin: allowedOrigins,
+  credentials: true
+}));
 
 // ✅ Allow CORS headers globally (for static + API)
 app.use((req, res, next) => {

@@ -72,7 +72,7 @@ exports.getSellerProfile = async (req, res) => {
 };
 
 // Update Seller Profile
-const BASE_URL = "http://localhost:5000"; // or process.env.API_BASE_URL
+const BASE_URL = "https://shopverse-backend-xls7.onrender.com"; // or process.env.API_BASE_URL
 
 exports.updateSellerProfile = async (req, res) => {
   try {
