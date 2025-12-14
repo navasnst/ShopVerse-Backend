@@ -19,21 +19,59 @@ const generateToken = (id) => {
 };
 
 // ✅ Admin Registration
+// exports.registerAdmin = async (req, res) => {
+//   try {
+//     const { name, email, password } = req.body;
+
+//     const adminExists = await Admin.findOne({ email });
+//     if (adminExists) {
+//       return res.status(400).json({ success: false, message: "Admin already exists" });
+//     }
+
+//     const hashedPassword = await bcrypt.hash(password, 10);
+//     const admin = await Admin.create({
+//       name,
+//       email,
+//       password: hashedPassword,
+//       role: "admin", // ✅ ensure role field exists
+//     });
+
+//     res.status(201).json({
+//       success: true,
+//       admin: {
+//         _id: admin._id,
+//         name: admin.name,
+//         email: admin.email,
+//         role: "admin",
+//       },
+//       token: generateToken(admin),
+//     });
+//   } catch (err) {
+//     console.error("Admin register error:", err);
+//     res.status(500).json({ success: false, message: "Server error" });
+//   }
+// };
+
 exports.registerAdmin = async (req, res) => {
   try {
     const { name, email, password } = req.body;
 
-    const adminExists = await Admin.findOne({ email });
+    const adminExists = await Admin.findOne({
+      email: email.toLowerCase().trim(),
+    });
+
     if (adminExists) {
-      return res.status(400).json({ success: false, message: "Admin already exists" });
+      return res.status(400).json({
+        success: false,
+        message: "Admin already exists",
+      });
     }
 
-    const hashedPassword = await bcrypt.hash(password, 10);
     const admin = await Admin.create({
       name,
-      email,
-      password: hashedPassword,
-      role: "admin", // ✅ ensure role field exists
+      email: email.toLowerCase().trim(),
+      password, // ✅ PLAIN password
+      role: "admin",
     });
 
     res.status(201).json({
@@ -42,9 +80,9 @@ exports.registerAdmin = async (req, res) => {
         _id: admin._id,
         name: admin.name,
         email: admin.email,
-        role: "admin",
+        role: admin.role,
       },
-      token: generateToken(admin),
+      token: generateToken(admin._id),
     });
   } catch (err) {
     console.error("Admin register error:", err);
@@ -52,12 +90,11 @@ exports.registerAdmin = async (req, res) => {
   }
 };
 
-
 // ✅ Admin Login 
 exports.loginAdmin = async (req, res) => {
   try {
     const { email, password } = req.body;
-    const admin = await Admin.findOne({ email });
+    const admin = await Admin.findOne({ email: email.toLowerCase().trim(), });
 
     if (!admin) {
       return res.status(401).json({ success: false, message: "Invalid email or password" });
