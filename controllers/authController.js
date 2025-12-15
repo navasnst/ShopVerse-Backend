@@ -11,6 +11,8 @@ exports.register = async (req, res) => {
     const user = await User.create({ name, email, password, role: role || 'user', shopName });
     const token = generateToken({ id: user._id, role: user.role });
 
+    res.status(201).json({ success: true, user: { id: user._id, name: user.name, email: user.email, role: user.role }, token });
+
     // Send Welcome Mail
     await sendMail(
       user.email,
@@ -20,8 +22,6 @@ exports.register = async (req, res) => {
        <p>Welcome to <b>ShopVerse</b>! We're glad to have you onboard.</p>
        <p>Enjoy shopping and selling with us.</p>`
     );
-
-    res.status(201).json({ success: true, user: { id: user._id, name: user.name, email: user.email, role: user.role }, token });
   } catch (err) {
     console.error(err);
     res.status(500).json({ success: false, message: 'Server error' });
@@ -38,17 +38,6 @@ exports.login = async (req, res) => {
     }
     const token = generateToken({ id: user._id, role: user.role });
 
-    // Send login notification email
-    await sendMail(
-      user.email,
-      "Login Alert 🚀",
-      `Hi ${user.name}, you just logged in to your ShopVerse account.`,
-      `<p>Hi ${user.name},</p>
-       <p>You just logged in to <b>ShopVerse</b>.</p>
-       <p>If this wasn't you, please reset your password immediately.</p>`
-    );
-
-
     // ✅ Always send profileImage with full URL
     const profileImage = user.profileImage
       ? user.profileImage.startsWith("http")
@@ -57,6 +46,16 @@ exports.login = async (req, res) => {
       : null;
 
     res.json({ success: true, user: { id: user._id, name: user.name, email: user.email, role: user.role }, token });
+
+     // Send login notification email
+    await sendMail(
+      user.email,
+      "Login Alert 🚀",
+      `Hi ${user.name}, you just logged in to your ShopVerse account.`,
+      `<p>Hi ${user.name},</p>
+       <p>You just logged in to <b>ShopVerse</b>.</p>
+       <p>If this wasn't you, please reset your password immediately.</p>`
+    );
   } catch (err) {
     console.error(err);
     res.status(500).json({ success: false, message: 'Server error' });
