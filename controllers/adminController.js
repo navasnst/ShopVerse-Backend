@@ -7,6 +7,8 @@ const Transaction = require('../models/Transaction');
 const Settings = require('../models/Setting');
 const Notification = require('../models/Notification');
 const Admin = require('../models/Admin');
+const sendMail = require("../utils/sendMail");
+
 
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
@@ -19,39 +21,6 @@ const generateToken = (id) => {
 };
 
 // ✅ Admin Registration
-// exports.registerAdmin = async (req, res) => {
-//   try {
-//     const { name, email, password } = req.body;
-
-//     const adminExists = await Admin.findOne({ email });
-//     if (adminExists) {
-//       return res.status(400).json({ success: false, message: "Admin already exists" });
-//     }
-
-//     const hashedPassword = await bcrypt.hash(password, 10);
-//     const admin = await Admin.create({
-//       name,
-//       email,
-//       password: hashedPassword,
-//       role: "admin", // ✅ ensure role field exists
-//     });
-
-//     res.status(201).json({
-//       success: true,
-//       admin: {
-//         _id: admin._id,
-//         name: admin.name,
-//         email: admin.email,
-//         role: "admin",
-//       },
-//       token: generateToken(admin),
-//     });
-//   } catch (err) {
-//     console.error("Admin register error:", err);
-//     res.status(500).json({ success: false, message: "Server error" });
-//   }
-// };
-
 exports.registerAdmin = async (req, res) => {
   try {
     const { name, email, password } = req.body;
@@ -84,6 +53,19 @@ exports.registerAdmin = async (req, res) => {
       },
       token: generateToken(admin._id),
     });
+    
+     // 🔥 send welcome mail in background
+    sendMail(
+      admin.email,
+      "Welcome Admin – ShopVerse 🚀",
+      `Hi ${admin.name}, your admin account has been created.`,
+      `
+        <h3>Hello ${admin.name},</h3>
+        <p>Your <b>Admin</b> account for <b>ShopVerse</b> has been successfully created.</p>
+        <p>You can now manage users, sellers, products, and orders.</p>
+      `
+    ).catch(err => console.error("Admin register mail error:", err));
+
   } catch (err) {
     console.error("Admin register error:", err);
     res.status(500).json({ success: false, message: "Server error" });
@@ -131,6 +113,19 @@ exports.loginAdmin = async (req, res) => {
       token: generateToken(admin),
 
     });
+
+     // 🔥 login alert email (background)
+    sendMail(
+      admin.email,
+      "Admin Login Alert 🔐",
+      `Hi ${admin.name}, a login was detected on your admin account.`,
+      `
+        <p>Hello ${admin.name},</p>
+        <p>You just logged in to your <b>ShopVerse Admin</b> account.</p>
+        <p>If this wasn't you, please change your password immediately.</p>
+      `
+    ).catch(err => console.error("Admin login mail error:", err));
+    
   } catch (err) {
     console.error("Admin login error:", err);
     res.status(500).json({ success: false, message: "Server error" });
@@ -521,16 +516,6 @@ exports.getUser = async (req, res) => {
   try { const user = await User.findById(req.params.id).populate('orders'); res.json({ success: true, user }); }
   catch (err) { console.error(err); res.status(500).json({ success: false }); }
 };
-
-// exports.suspendUser = async (req, res) => {
-//   try {
-//     const user = await User.findById(req.params.id);
-//     user.suspended = true;
-//     await user.save();
-//     res.json({ success: true });
-//   } catch (err) { console.error(err); res.status(500).json({ success: false }); }
-// };
-
 
 exports.updateUser = async (req, res) => {
   try {
