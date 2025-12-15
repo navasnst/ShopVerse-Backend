@@ -54,18 +54,6 @@ exports.registerAdmin = async (req, res) => {
       token: generateToken(admin._id),
     });
 
-    // 🔥 send welcome mail in background
-    // sendMail(
-    //   admin.email,
-    //   "Welcome Admin – ShopVerse 🚀",
-    //   `Hi ${admin.name}, your admin account has been created.`,
-    //   `
-    //     <h3>Hello ${admin.name},</h3>
-    //     <p>Your <b>Admin</b> account for <b>ShopVerse</b> has been successfully created.</p>
-    //     <p>You can now manage users, sellers, products, and orders.</p>
-    //   `
-    // ).catch(err => console.error("Admin register mail error:", err));
-
     sendMail({
       to: admin.email,
       subject: "Welcome Admin – ShopVerse 🚀",
