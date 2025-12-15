@@ -73,7 +73,6 @@ exports.registerAdmin = async (req, res) => {
       html: `<h3>Hello ${admin.name}</h3><p>Your admin account is ready.</p>`
     });
 
-
   } catch (err) {
     console.error("Admin register error:", err);
     res.status(500).json({ success: false, message: "Server error" });
@@ -123,18 +122,6 @@ exports.loginAdmin = async (req, res) => {
     });
 
     // 🔥 login alert email (background)
-    // sendMail(
-    //   admin.email,
-    //   "Admin Login Alert 🔐",
-    //   `Hi ${admin.name}, a login was detected on your admin account.`,
-    //   `
-    //     <p>Hello ${admin.name},</p>
-    //     <p>You just logged in to your <b>ShopVerse Admin</b> account.</p>
-    //     <p>If this wasn't you, please change your password immediately.</p>
-    //   `
-    // ).catch(err => console.error("Admin login mail error:", err));
-
-
     sendMail({
       to: admin.email,
       subject: "Admin Login Alert 🔐 – ShopVerse",
@@ -150,7 +137,6 @@ exports.loginAdmin = async (req, res) => {
     </div>
   `
     });
-
 
   } catch (err) {
     console.error("Admin login error:", err);
