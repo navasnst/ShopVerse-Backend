@@ -21,7 +21,7 @@ router.post("/", async (req, res) => {
     });
 
     // Send message to ShopVerse inbox
-    await transporter.sendMail({
+    transporter.sendMail({
       from: `"${name}" <${email}>`,
       to: process.env.EMAIL_USER,
       subject: `New Contact Form Message from ${name}`,
@@ -34,7 +34,7 @@ router.post("/", async (req, res) => {
     });
 
     // Confirmation to user
-    await transporter.sendMail({
+    transporter.sendMail({
       from: `"ShopVerse" <${process.env.EMAIL_USER}>`,
       to: email,
       subject: "We received your message!",
