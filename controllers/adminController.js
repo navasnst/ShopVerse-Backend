@@ -53,18 +53,26 @@ exports.registerAdmin = async (req, res) => {
       },
       token: generateToken(admin._id),
     });
-    
-     // 🔥 send welcome mail in background
-    sendMail(
-      admin.email,
-      "Welcome Admin – ShopVerse 🚀",
-      `Hi ${admin.name}, your admin account has been created.`,
-      `
-        <h3>Hello ${admin.name},</h3>
-        <p>Your <b>Admin</b> account for <b>ShopVerse</b> has been successfully created.</p>
-        <p>You can now manage users, sellers, products, and orders.</p>
-      `
-    ).catch(err => console.error("Admin register mail error:", err));
+
+    // 🔥 send welcome mail in background
+    // sendMail(
+    //   admin.email,
+    //   "Welcome Admin – ShopVerse 🚀",
+    //   `Hi ${admin.name}, your admin account has been created.`,
+    //   `
+    //     <h3>Hello ${admin.name},</h3>
+    //     <p>Your <b>Admin</b> account for <b>ShopVerse</b> has been successfully created.</p>
+    //     <p>You can now manage users, sellers, products, and orders.</p>
+    //   `
+    // ).catch(err => console.error("Admin register mail error:", err));
+
+    sendMail({
+      to: admin.email,
+      subject: "Welcome Admin – ShopVerse 🚀",
+      text: `Hi ${admin.name}, your admin account has been created.`,
+      html: `<h3>Hello ${admin.name}</h3><p>Your admin account is ready.</p>`
+    });
+
 
   } catch (err) {
     console.error("Admin register error:", err);
@@ -110,22 +118,40 @@ exports.loginAdmin = async (req, res) => {
         role: admin.role || "admin",
         profileImage,
       },
-      token: generateToken(admin),
+      token: generateToken(admin._id),
 
     });
 
-     // 🔥 login alert email (background)
-    sendMail(
-      admin.email,
-      "Admin Login Alert 🔐",
-      `Hi ${admin.name}, a login was detected on your admin account.`,
-      `
-        <p>Hello ${admin.name},</p>
-        <p>You just logged in to your <b>ShopVerse Admin</b> account.</p>
-        <p>If this wasn't you, please change your password immediately.</p>
-      `
-    ).catch(err => console.error("Admin login mail error:", err));
-    
+    // 🔥 login alert email (background)
+    // sendMail(
+    //   admin.email,
+    //   "Admin Login Alert 🔐",
+    //   `Hi ${admin.name}, a login was detected on your admin account.`,
+    //   `
+    //     <p>Hello ${admin.name},</p>
+    //     <p>You just logged in to your <b>ShopVerse Admin</b> account.</p>
+    //     <p>If this wasn't you, please change your password immediately.</p>
+    //   `
+    // ).catch(err => console.error("Admin login mail error:", err));
+
+
+    sendMail({
+      to: admin.email,
+      subject: "Admin Login Alert 🔐 – ShopVerse",
+      text: `Hi ${admin.name}, a login was detected on your ShopVerse admin account.`,
+      html: `
+    <div style="font-family: Arial, sans-serif;">
+      <h3>Hello ${admin.name},</h3>
+      <p>You have successfully logged in to your <b>ShopVerse Admin</b> account.</p>
+      <p><b>Time:</b> ${new Date().toLocaleString()}</p>
+      <p>If this was <b>not you</b>, please change your password immediately.</p>
+      <br/>
+      <p>— <b>ShopVerse Security Team</b></p>
+    </div>
+  `
+    });
+
+
   } catch (err) {
     console.error("Admin login error:", err);
     res.status(500).json({ success: false, message: "Server error" });
