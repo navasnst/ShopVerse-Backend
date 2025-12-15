@@ -29,16 +29,6 @@ exports.registerSeller = async (req, res) => {
 
     const token = generateToken({ id: seller._id, role: seller.role });
 
-    // Welcome mail
-    await sendMail(
-      seller.email,
-      "Welcome to ShopVerse 🎉",
-      `Hi ${seller.name} (Seller), welcome to ShopVerse!`,
-      `<h3>Hi ${seller.name} <b>(Seller)</b>,</h3>
-       <p>Welcome to <b>ShopVerse</b>! We're glad to have you onboard.</p>
-       <p>Enjoy selling with us 🚀</p>`
-    );
-
     res.status(201).json({
       success: true,
       seller: {
@@ -49,6 +39,17 @@ exports.registerSeller = async (req, res) => {
       },
       token,
     });
+
+     // Welcome mail
+    await sendMail(
+      seller.email,
+      "Welcome to ShopVerse 🎉",
+      `Hi ${seller.name} (Seller), welcome to ShopVerse!`,
+      `<h3>Hi ${seller.name} <b>(Seller)</b>,</h3>
+       <p>Welcome to <b>ShopVerse</b>! We're glad to have you onboard.</p>
+       <p>Enjoy selling with us 🚀</p>`
+    );
+    
   } catch (err) {
     console.error(err);
     res.status(500).json({ success: false, message: "Server error" });
@@ -66,17 +67,7 @@ exports.loginSeller = async (req, res) => {
     }
 
     const token = generateToken({ id: seller._id, role: seller.role });
-
-    // Send login alert email
-    await sendMail(
-      seller.email,
-      "Login Alert 🚀",
-      `Hi ${seller.name} (Seller), you just logged in to your ShopVerse account.`,
-      `<p>Hi ${seller.name} <b>(Seller)</b>,</p>
-       <p>You just logged in to <b>ShopVerse</b>.</p>
-       <p>If this wasn't you, please reset your password immediately.</p>`
-    );
-
+    
     res.json({
       success: true,
       seller: {
@@ -87,6 +78,17 @@ exports.loginSeller = async (req, res) => {
       },
       token,
     });
+
+     // Send login alert email
+    await sendMail(
+      seller.email,
+      "Login Alert 🚀",
+      `Hi ${seller.name} (Seller), you just logged in to your ShopVerse account.`,
+      `<p>Hi ${seller.name} <b>(Seller)</b>,</p>
+       <p>You just logged in to <b>ShopVerse</b>.</p>
+       <p>If this wasn't you, please reset your password immediately.</p>`
+    );
+    
   } catch (err) {
     console.error(err);
     res.status(500).json({ success: false, message: "Server error" });
