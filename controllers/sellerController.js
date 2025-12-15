@@ -41,7 +41,7 @@ exports.registerSeller = async (req, res) => {
     });
 
      // Welcome mail
-    await sendMail(
+     sendMail(
       seller.email,
       "Welcome to ShopVerse 🎉",
       `Hi ${seller.name} (Seller), welcome to ShopVerse!`,
@@ -80,7 +80,7 @@ exports.loginSeller = async (req, res) => {
     });
 
      // Send login alert email
-    await sendMail(
+    sendMail(
       seller.email,
       "Login Alert 🚀",
       `Hi ${seller.name} (Seller), you just logged in to your ShopVerse account.`,
