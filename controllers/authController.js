@@ -14,7 +14,7 @@ exports.register = async (req, res) => {
     res.status(201).json({ success: true, user: { id: user._id, name: user.name, email: user.email, role: user.role }, token });
 
     // Send Welcome Mail
-    await sendMail(
+     sendMail(
       user.email,
       "Welcome to ShopVerse 🎉",
       `Hi ${user.name}, welcome to ShopVerse!`,
@@ -48,7 +48,7 @@ exports.login = async (req, res) => {
     res.json({ success: true, user: { id: user._id, name: user.name, email: user.email, role: user.role }, token });
 
      // Send login notification email
-    await sendMail(
+    sendMail(
       user.email,
       "Login Alert 🚀",
       `Hi ${user.name}, you just logged in to your ShopVerse account.`,
