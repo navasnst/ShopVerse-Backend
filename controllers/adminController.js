@@ -39,7 +39,7 @@ exports.registerAdmin = async (req, res) => {
     const admin = await Admin.create({
       name,
       email: email.toLowerCase().trim(),
-      password, // ✅ PLAIN password
+      password,
       role: "admin",
     });
 
@@ -54,12 +54,40 @@ exports.registerAdmin = async (req, res) => {
       token: generateToken(admin._id),
     });
 
-    sendMail({
-      to: admin.email,
-      subject: "Welcome Admin – ShopVerse 🚀",
-      text: `Hi ${admin.name}, your admin account has been created.`,
-      html: `<h3>Hello ${admin.name}</h3><p>Your admin account is ready.</p>`
-    });
+    sendMail(
+      admin.email,
+      "Admin Account Created 🔐 – ShopVerse",
+      `Hi ${admin.name}, your ShopVerse admin account has been created successfully.`,
+      `
+    <div style="font-family: Arial, sans-serif;">
+      <h3>Welcome ${admin.name},</h3>
+
+      <p>Your <b>ShopVerse Admin</b> account has been created successfully.</p>
+
+      <p><b>Email:</b> ${admin.email}</p>
+      <p><b>Role:</b> Admin</p>
+      <p><b>Created At:</b> ${new Date().toLocaleString()}</p>
+
+      <br/>
+
+      <p>You can now log in and manage:</p>
+      <ul>
+        <li>Products</li>
+        <li>Orders</li>
+        <li>Users</li>
+        <li>Reports</li>
+      </ul>
+
+      <br/>
+
+      <p>If this account was <b>not created by you</b>, please secure your system immediately.</p>
+
+      <br/>
+      <p>— <b>ShopVerse Security Team</b></p>
+    </div>
+  `
+    );
+
 
   } catch (err) {
     console.error("Admin register error:", err);
@@ -110,11 +138,11 @@ exports.loginAdmin = async (req, res) => {
     });
 
     // 🔥 login alert email (background)
-    sendMail({
-      to: admin.email,
-      subject: "Admin Login Alert 🔐 – ShopVerse",
-      text: `Hi ${admin.name}, a login was detected on your ShopVerse admin account.`,
-      html: `
+    sendMail(
+      admin.email,
+      "Admin Login Alert 🔐 – ShopVerse",
+      `Hi ${admin.name}, a login was detected on your ShopVerse admin account.`,
+      `
     <div style="font-family: Arial, sans-serif;">
       <h3>Hello ${admin.name},</h3>
       <p>You have successfully logged in to your <b>ShopVerse Admin</b> account.</p>
@@ -124,7 +152,8 @@ exports.loginAdmin = async (req, res) => {
       <p>— <b>ShopVerse Security Team</b></p>
     </div>
   `
-    });
+    );
+
 
   } catch (err) {
     console.error("Admin login error:", err);
